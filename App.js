@@ -3,6 +3,8 @@ import React, { useState, useEffect, useRef } from 'react'
 import { StyleSheet, Text, View, TouchableOpacity, SafeAreaView, Button, Alert } from 'react-native'
 import { Video, Audio } from "expo-av";
 import VideoPlayer from 'expo-video-player'
+import { Fontisto } from '@expo/vector-icons';
+import { MaterialIcons } from '@expo/vector-icons';
 
 export default function home() {
   const [hasPermission, setHasPermission] = useState(null)
@@ -37,9 +39,10 @@ export default function home() {
     return <Text>  No access to camera </Text>;
   }
 
-  function flip() {
+  function flipfunction() {
     if (type == Camera.Constants.Type.back) {
       setType(Camera.Constants.Type.front)
+     
     } else {
       setType(Camera.Constants.Type.back)
     }
@@ -63,9 +66,11 @@ export default function home() {
 
   function playstopvideo() {
     return (
+      <View  style={{ justifyContent:'center',textAlign:'center',alignItems:'center'}} >
       <TouchableOpacity onLongPress={recordVideo} style={styles.buttonbackground} onPressOut={stopVideo}  >
-        <Text> record </Text>
+     <Fontisto name="record" size={24} color="black" />
       </TouchableOpacity>
+      </View>
     )
   }
 
@@ -92,25 +97,25 @@ export default function home() {
     }
   }
 
-
   function recordingindicator() {
     return (
       <View style={styles.indicator}>
         <Text  > recording.... </Text>
       </View>
     )
-
   }
 
   function flip() {
-    <View style={styles.button} >
+    return(
+    <View  >
       <TouchableOpacity
-        onPress={flip}
+        onPress={flipfunction}
         style={styles.buttonbackground}
       >
-        <Text>Press Here</Text>
+       <MaterialIcons name="flip-camera-android" size={24} color="black" />
       </TouchableOpacity>
     </View>
+    )
   }
 
   function video() {
@@ -136,11 +141,16 @@ export default function home() {
     {videosource && video()}
         
     {preview && cancel()}
-      
-      <View style={styles.button}>    
 
+      <View style={{ flex: 0.1, flexDirection:'row', flexWrap: 'wrap'}}  > 
+      <View style={{flexDirection:'column', marginLeft:25,padding:5}}>
+          {!preview && flip()}
+        </View>  
+      <View style={{alignItems:'center',flexDirection:'column',padding:5,marginLeft:100}}>
         {recordingstatus && recordingindicator()}
-        {!preview && playstopvideo()}
+        {!preview && playstopvideo()}   
+        </View>  
+        
       </View>
 
     </SafeAreaView>
@@ -157,13 +167,23 @@ const styles = StyleSheet.create({
   },
 
   buttonbackground: {
+    borderRadius: 35,
     backgroundColor: "#DDDDDD",
-    padding: 10
+    padding: 10,
+    alignItems:'center',
+  },
+
+  buttonbackgroundflip: {
+    
+    backgroundColor: "#DDDDDD",
+    alignItems:'flex-start',
+    justifyContent: 'flex-start',
   },
 
   container: {
     ...StyleSheet.absoluteFillObject,
   },
+
   media: {
       flex:1,
       height:400,
@@ -172,13 +192,13 @@ const styles = StyleSheet.create({
   },
 
   button: {
-    flex: 0.1,
-    paddingTop: 10,
-    alignItems: 'center',
+   
+   
   },
 
   indicator: {
     alignItems: 'center',
+    justifyContent:'center'
   },
 
   camera: {
