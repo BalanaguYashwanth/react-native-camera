@@ -54,44 +54,39 @@ export default function recuriterhome() {
             <View>
                 { checked && <ScrollView>
                     {
-                        arr.map((form) => (
+                        arr.map((form,index) => (
                             <View key={form.id}>
-                                <Button title={'quiz ' + form.id} />
-                                <TextInput style={{ margin: 5 }} onChangeText={(value) => {
+                                <Button title={'quiz ' + index} />
+                                <TextInput  style={{ margin: 5 }} onChangeText={(value) => {
                                     let uform={...forms}
                                     let formkey=form.key
-                                    //let structform=
                                     uform[form.key]={...forms[formkey],question:value}
                                     setForms(uform)
-                                }} label={form.question} />
+                                }} label={'enter the question'} />
                                 <TextInput style={{ margin: 5 }}  onChangeText={(value) => {
                                     let uform={...forms}
                                     let formkey=form.key
-                                    //let structform=
                                     uform[form.key]={...forms[formkey],opt1:value}
                                     setForms(uform)
-                                }} label={form.opt1} />
+                                }} label={'enter the option1'} />
                                 <TextInput style={{ margin: 5 }}  onChangeText={(value) => {
                                     let uform={...forms}
                                     let formkey=form.key
-                                    //let structform=
                                     uform[form.key]={...forms[formkey],opt2:value}
                                     setForms(uform)
-                                }} label={form.opt2} />
+                                }} label={'enter the option2'} />
                                 <TextInput style={{ margin: 5 }}  onChangeText={(value) => {
                                     let uform={...forms}
                                     let formkey=form.key
-                                    //let structform=
                                     uform[form.key]={...forms[formkey],opt3:value}
                                     setForms(uform)
-                                }} label={form.opt3} />
+                                }} label={'enter the option3'} />
                                 <TextInput style={{ margin: 5 }}  onChangeText={(value) => {
                                     let uform={...forms}
                                     let formkey=form.key
-                                    //let structform=
                                     uform[form.key]={...forms[formkey],opt4:value}
                                     setForms(uform)
-                                }} label={form.opt4} />
+                                }} label={'enter the option4'} />
                                 <Button title={'delete'} color="#BEBEBE" onPress={() => deleting(arr, form.id)} />
                             </View>
                         ))
