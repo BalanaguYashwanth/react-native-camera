@@ -3,6 +3,7 @@ import { View, Text, Button, Alert, ScrollView } from 'react-native'
 import home from './camera'
 import { Checkbox, TextInput } from 'react-native-paper'
 import { styles } from '../styles/global'
+import axios from 'axios'
 
 export default function recuriterhome() {
 
@@ -11,6 +12,9 @@ export default function recuriterhome() {
     const [numform, setNumform] = useState(['form1'])
     const [forms, setForms] = useState({ form1: { id: 1, question: 'enter the question', opt1: 'enter the option1', opt2: 'enter the option2', opt3: 'enter the option3', opt4: 'enter the option4' } })
     const [arrs, setArrs] = useState([])
+    const [companyName,setCompanyName] = useState('')
+    const [project, setProject] = useState('')
+    const [info, setInfo] = useState('')
 
     function add() {
         let addform = { ...forms }
@@ -36,8 +40,15 @@ export default function recuriterhome() {
     }
 
     function submit() {
-        console.log(forms)
-        //Alert.alert('done')
+        axios.post('https://particle-ae921-default-rtdb.firebaseio.com/media.json',{
+            project:project,    
+            companyname:companyName,
+            form:forms,
+        }).then(res=>{
+            console.log(res)
+            setInfo('submitted')
+        })
+        .catch(err=>console.log(err))
     }
 
     function allforms(datas) {
@@ -49,6 +60,7 @@ export default function recuriterhome() {
             arr.push(datas[x])
             console.log(arr)
         }
+
 
         return (
             <View>
@@ -103,7 +115,7 @@ export default function recuriterhome() {
             <View style={{ marginLeft: 20, marginRight: 20, margin: 10 }}>
                 <ScrollView>
                     <Text style={{ justifyContent: 'center', textAlign: 'center', margin: 10, fontSize: 20, fontWeight: 'bold' }} >  Details Form </Text>
-                    <TextInput label='enter the company name' />
+                    <TextInput label='enter the company name' onChangeText={(val)=> setCompanyName(val)} />
 
                     {/* <Checkbox  value={isSelected}  onValueChange={setSelected(true)} /> */}
                     <View style={{ justifyContent: 'center', flexDirection: 'row', marginBottom: 5, marginTop: 10 }}>
@@ -116,13 +128,10 @@ export default function recuriterhome() {
 
                         <Text style={{ fontWeight: 'bold', textAlign: 'center', fontSize: 20, margin: 5 }} >  Quiz Section </Text>
                     </View>
-
                     {
                         allforms(forms)
 
                     }
-
-
                     <View style={{ flexDirection: 'row', justifyContent: 'center', marginBottom: 10, marginTop: 5 }} >
                         <Checkbox
                             onPress={() => (setProjectChecked(!projectChecked))}
@@ -132,9 +141,12 @@ export default function recuriterhome() {
                         <Text style={{ fontWeight: 'bold', textAlign: 'center', fontSize: 20, margin: 5 }}  >  Project Section </Text>
                     </View>
 
-                    {projectChecked && <TextInput label="enter the project details" />}
+                    {projectChecked && <TextInput label="enter the project details" onChangeText={(val)=> setProject(val)} />}
 
                     <Button title="submit" onPress={submit} />
+                    <br />
+                   <Text style={{justifyContent:'center',textAlign:'center'}} > {info}  </Text>
+                    
                 </ScrollView>
             </View>
         </View>
