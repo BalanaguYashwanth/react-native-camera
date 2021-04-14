@@ -6,11 +6,22 @@ import Recruiter from '../screens/recruiter'
 import Jobseeker from '../screens/jobseeker'
 import Camera from '../screens/camera'
 import Recruiterhome from '../screens/recruiterhome' 
+import Jobdata from '../screens/jobdata'
 
 const screens={
-    Recruiterhome:{
-        screen:Recruiterhome
+    
+    Jobseeker:{
+        screen:Jobseeker,
+        navigationOptions:{
+            headerLeft:()=>(null)
+        }
     },
+    
+    Jobdata:{
+        screen:Jobdata
+    },
+
+   
     Switch:{
         screen:Switch,
         navigationOptions:{
@@ -23,13 +34,10 @@ const screens={
             headerLeft: () => (null)
         }
     },
-    Jobseeker:{
-        screen:Jobseeker,
-        navigationOptions:{
-            headerLeft:()=>(null)
-        }
-    },
   
+    Recruiterhome:{
+        screen:Recruiterhome
+    },
 }
 
 const homestack = createStackNavigator(screens)

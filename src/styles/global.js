@@ -7,6 +7,7 @@ export const styles = StyleSheet.create({
         justifyContent: 'center', 
         padding:20,
     },
+    
     button:{
         backgroundColor:'#DDDDDD',
         padding:10,
@@ -27,7 +28,6 @@ export const styles = StyleSheet.create({
     body:{
         justifyContent: 'center', 
     },
-
 
 
 })
