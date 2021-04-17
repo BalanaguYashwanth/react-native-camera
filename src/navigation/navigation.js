@@ -9,6 +9,18 @@ import Recruiterhome from '../screens/recruiterhome'
 import Jobdata from '../screens/jobdata'
 
 const screens={
+
+
+    Switch:{
+        screen:Switch,
+        navigationOptions:{
+            title:'Switch roles'
+        }
+    },
+
+    Recruiterhome:{
+        screen:Recruiterhome
+    },
     
     Jobseeker:{
         screen:Jobseeker,
@@ -18,16 +30,14 @@ const screens={
     },
     
     Jobdata:{
-        screen:Jobdata
-    },
-
-   
-    Switch:{
-        screen:Switch,
+        screen:Jobdata,
         navigationOptions:{
-            title:'Switch roles'
+            headerTitle:'Job challange',
+            headerLeft:() => (null)
         }
     },
+   
+   
     Recruiter:{
         screen:Recruiter,
         navigationOptions:{
@@ -35,9 +45,15 @@ const screens={
         }
     },
   
-    Recruiterhome:{
-        screen:Recruiterhome
+   
+
+    camera:{
+        screen:Camera,
+        navigationOptions:{
+            headerLeft: () => (null)
+        }
     },
+
 }
 
 const homestack = createStackNavigator(screens)

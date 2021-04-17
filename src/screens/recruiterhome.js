@@ -129,7 +129,7 @@ export default function recuriterhome() {
                         <Text style={{ fontWeight: 'bold', textAlign: 'center', fontSize: 20, margin: 5 }} >  Quiz Section </Text>
                     </View>
                     {
-                        allforms(forms)
+                       allforms(forms)
 
                     }
                     <View style={{ flexDirection: 'row', justifyContent: 'center', marginBottom: 10, marginTop: 5 }} >
@@ -144,7 +144,7 @@ export default function recuriterhome() {
                     {projectChecked && <TextInput label="enter the project details" onChangeText={(val)=> setProject(val)} />}
 
                     <Button title="submit" onPress={submit} />
-                    <br />
+                    <Text> {'\n'} </Text>
                    <Text style={{justifyContent:'center',textAlign:'center'}} > {info}  </Text>
                     
                 </ScrollView>

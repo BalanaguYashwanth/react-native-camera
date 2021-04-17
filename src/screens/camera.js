@@ -5,6 +5,7 @@ import { Video, Audio } from "expo-av";
 import VideoPlayer from 'expo-video-player'
 import { Fontisto } from '@expo/vector-icons';
 import { MaterialIcons } from '@expo/vector-icons';
+import axios from 'axios'
 
 export default function home() {
   const [hasPermission, setHasPermission] = useState(null)
@@ -21,7 +22,7 @@ export default function home() {
       await Audio.setAudioModeAsync({
         allowsRecordingIOS: true,
         playsInSilentModeIOS: true,
-      }); 
+      });
       const { status } = await Camera.requestPermissionsAsync();
       setHasPermission(status === 'granted');
     }
@@ -42,7 +43,7 @@ export default function home() {
   function flipfunction() {
     if (type == Camera.Constants.Type.back) {
       setType(Camera.Constants.Type.front)
-     
+
     } else {
       setType(Camera.Constants.Type.back)
     }
@@ -66,15 +67,15 @@ export default function home() {
 
   function playstopvideo() {
     return (
-      <View  style={{ justifyContent:'center',textAlign:'center',alignItems:'center'}} >
-      <TouchableOpacity onLongPress={recordVideo} style={styles.buttonbackground} onPressOut={stopVideo}  >
-     <Fontisto name="record" size={24} color="black" />
-      </TouchableOpacity>
+      <View style={{ justifyContent: 'center', textAlign: 'center', alignItems: 'center' }} >
+        <TouchableOpacity onLongPress={recordVideo} style={styles.buttonbackground} onPressOut={stopVideo}  >
+          <Fontisto name="record" size={24} color="black" />
+        </TouchableOpacity>
       </View>
     )
   }
 
-  function cancelvideo(){
+  function cancelvideo() {
     setVideosource(null)
     setPreview(false)
   }
@@ -82,9 +83,9 @@ export default function home() {
   function cancel() {
     return (
       <View style={styles.vcancelbutton} >
-      <TouchableOpacity onPress={cancelvideo} style={{textAlign:'left', paddingTop:5}}  >
-        <Text style={{padding:20}}> cancel </Text>
-      </TouchableOpacity>
+        <TouchableOpacity onPress={cancelvideo} style={{ textAlign: 'left', position:'absolute', padding:5 }}  >
+          <Text style={styles.button} > cancel </Text>
+        </TouchableOpacity>
       </View>
     )
   }
@@ -106,77 +107,106 @@ export default function home() {
   }
 
   function flip() {
-    return(
-    <View  >
-      <TouchableOpacity
-        onPress={flipfunction}
-        style={styles.buttonbackground}
-      >
-       <MaterialIcons name="flip-camera-android" size={24} color="black" />
-      </TouchableOpacity>
-    </View>
+    return (
+      <View  >
+        <TouchableOpacity
+          onPress={flipfunction}
+          style={styles.buttonbackground}
+        >
+          <MaterialIcons name="flip-camera-android" size={24} color="black" />
+        </TouchableOpacity>
+      </View>
     )
   }
 
   function video() {
     return (
       <View style={styles.media}>
-      <VideoPlayer
-  videoProps={{
-    shouldPlay: true,
-    resizeMode: Video.RESIZE_MODE_CONTAIN,
-    source: {
-      uri: videosource,
-    },
-  }}
-/>
-</View>
+        <VideoPlayer
+          videoProps={{
+            shouldPlay: true,
+            resizeMode: Video.RESIZE_MODE_CONTAIN,
+            source: {
+              uri: videosource,
+            },
+          }}
+        />
+      </View>
     )
   }
 
+  function submit() {
+    axios.post('https://particle-ae921-default-rtdb.firebaseio.com/video.json', {
+      video: videosource,
+    })
+      .then(res => console.log(res))
+      .catch(err => console.log(err))
+  }
+
+
   return (
     <SafeAreaView style={styles.container} >
-    { !preview && <Camera ref={cameraRef} style={styles.camera} type={type} />}
+      { !preview && <Camera ref={cameraRef} style={styles.camera} type={type} />}
 
-    {videosource && video()}
-        
-    {preview && cancel()}
+      {videosource && video()}
 
-      <View style={{ flex: 0.1, flexDirection:'row', flexWrap: 'wrap'}}  > 
-      <View style={{flexDirection:'column', marginLeft:25,padding:5}}>
+      <View style={{flexDirection:'row'}} >
+      {preview && cancel()}
+      {  preview && <View style={styles.vsubmitbutton}>
+        <Text style={styles.button} onPress={submit} >  submit </Text>
+      </View>
+      } 
+      </View>
+
+      <View style={{ flex: 0.1, flexDirection: 'row', flexWrap: 'wrap' }}  >
+        <View style={{ flexDirection: 'column', marginLeft: 25, padding: 5 }}>
           {!preview && flip()}
-        </View>  
-      <View style={{alignItems:'center',flexDirection:'column',padding:5,marginLeft:100}}>
-        {recordingstatus && recordingindicator()}
-        {!preview && playstopvideo()}   
-        </View>  
-        
+        </View>
+        <View style={{ alignItems: 'center', flexDirection: 'column', padding: 5, marginLeft: 100 }}>
+          {recordingstatus && recordingindicator()}
+          {!preview && playstopvideo()}
+        </View>
       </View>
 
     </SafeAreaView>
   )
 }
 
+
 const styles = StyleSheet.create({
 
-  vcancelbutton:{
-    flex:0.07,
+  vcancelbutton: {
+    flex:1,
     //justifyContent:'center',
     backgroundColor: 'white',
-    paddingTop:5
+   
+    position:'relative',
+    flexDirection:'column'
+  },
+
+  vsubmitbutton:{
+    flex: 1,
+    //justifyContent:'center',
+    backgroundColor: 'white',
+    padding: 5,
+    textAlign:'right',
+    alignItems:'flex-end',
+    justifyContent:'flex-end',
+    position:'relative',
+    flexDirection:'column',   
   },
 
   buttonbackground: {
     borderRadius: 35,
     backgroundColor: "#DDDDDD",
     padding: 10,
-    alignItems:'center',
+    alignItems: 'center',
   },
 
   buttonbackgroundflip: {
-    
+
     backgroundColor: "#DDDDDD",
-    alignItems:'flex-start',
+    alignItems: 'flex-start',
     justifyContent: 'flex-start',
   },
 
@@ -185,20 +215,23 @@ const styles = StyleSheet.create({
   },
 
   media: {
-      flex:1,
-      height:400,
-      marginTop:10,
+    flex: 1,
+    height: 400,
+    marginTop: 10,
     ...StyleSheet.absoluteFillObject,
   },
 
-  button: {
-   
-   
-  },
+  button:{
+    backgroundColor:'#DDDDDD',
+    alignItems:'center',
+    borderRadius:10,
+    padding:10,
+},
+
 
   indicator: {
     alignItems: 'center',
-    justifyContent:'center'
+    justifyContent: 'center'
   },
 
   camera: {
