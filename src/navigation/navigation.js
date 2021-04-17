@@ -7,9 +7,11 @@ import Jobseeker from '../screens/jobseeker'
 import Camera from '../screens/camera'
 import Recruiterhome from '../screens/recruiterhome' 
 import Jobdata from '../screens/jobdata'
+import Responses from '../screens/responses'
 
 const screens={
 
+  
 
     Switch:{
         screen:Switch,
@@ -18,9 +20,14 @@ const screens={
         }
     },
 
+    Responses:{
+        screen:Responses
+    },
+
     Recruiterhome:{
         screen:Recruiterhome
     },
+
     
     Jobseeker:{
         screen:Jobseeker,

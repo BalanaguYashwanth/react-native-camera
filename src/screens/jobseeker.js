@@ -8,6 +8,7 @@ import Jobdata from '../screens/jobdata'
 
 export default function jobseeker({navigation}) {
     const [datas, setDatas] = useState([])
+    
     useEffect(() => {
         axios.get('https://particle-ae921-default-rtdb.firebaseio.com/media.json')
             .then(res => {

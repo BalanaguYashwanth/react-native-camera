@@ -12,6 +12,11 @@ export default function Switch({navigation}) {
         navigation.push('Jobseeker')
     }
 
+    function responses()
+    {
+        navigation.push('Responses')
+    }
+
     return (
         <View style={styles.container}>
             <Text style={{textAlign:'center',margin:5, fontWeight:'bold'}}>  Who you are  </Text>
@@ -21,6 +26,10 @@ export default function Switch({navigation}) {
            
             <TouchableOpacity style={styles.button} onPress={jobseekerHandler}> 
             <Text> Job Seeker</Text> 
+            </TouchableOpacity>
+
+            <TouchableOpacity style={styles.button} onPress={responses}> 
+            <Text> Evaluator </Text> 
             </TouchableOpacity>
         </View>
     )

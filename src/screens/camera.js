@@ -6,14 +6,18 @@ import VideoPlayer from 'expo-video-player'
 import { Fontisto } from '@expo/vector-icons';
 import { MaterialIcons } from '@expo/vector-icons';
 import axios from 'axios'
-// import { fb, db } from '../firebase'
+import { fb, db } from '../authentication/config'
+import firebase from 'firebase'
+import uuid from 'uuid';
 
-export default function home() {
+export default function home({navigation}) {
   const [hasPermission, setHasPermission] = useState(null)
   const [type, setType] = useState(Camera.Constants.Type.back);
   const [videosource, setVideosource] = useState(null);
   const [recordingstatus, setRecordingstatus] = useState(false);
   const [preview, setPreview] = useState(false);
+  const [info,setInfo]=useState('')
+
   const cameraRef = useRef();
 
   useEffect(() => {
@@ -136,24 +140,48 @@ export default function home() {
     )
   }
 
-  function submit() {
 
-    // db.collection("users").add({
-    //   first: "Ada",
-    //   last: "Lovelace",
-    //   born: 1815
-    // })
-    //   .then((docRef) => {
-    //     console.log("Document written with ID: ", docRef.id);
-    //   })
-    //   .catch((error) => {
-    //     console.error("Error adding document: ", error);
-    //   });
 
-    axios.post('https://particle-ae921-default-rtdb.firebaseio.com/video.json', {
-      video: videosource,
+  async function submit() {
+
+    setInfo(' processing.....')
+
+    const blob = await new Promise((resolve, reject) => {
+      const xhr = new XMLHttpRequest();
+      xhr.onload = function () {
+        resolve(xhr.response);
+      };
+      xhr.onerror = function (e) {
+        console.log(e);
+        reject(new TypeError('Network request failed'));
+      };
+      xhr.responseType = 'blob';
+      xhr.open('GET', videosource, true);
+      xhr.send(null);
+    });
+
+    const ref = firebase
+      .storage()
+      .ref()
+      .child(uuid.v4());
+    const snapshot = await ref.put(blob);
+
+    // We're done with the blob, close and release it
+    blob.close();
+
+    let link = await snapshot.ref.getDownloadURL()
+   
+    await axios.post('https://particle-ae921-default-rtdb.firebaseio.com/job.json', {
+      company: navigation.getParam('company'),
+      personName:navigation.getParam('personName'),
+      quizAns:navigation.getParam('quizAns'),
+      projectLink:navigation.getParam('projectLink'),
+      video: link,
     })
-      .then(res => console.log(res))
+      .then(res => {
+        console.log(res)
+        navigation.push('Switch')
+      })
       .catch(err => console.log(err))
   }
 
@@ -166,8 +194,11 @@ export default function home() {
 
       <View style={{ flexDirection: 'row' }} >
         {preview && cancel()}
+        
         {preview && <View style={styles.vsubmitbutton}>
+          
           <Text style={styles.button} onPress={submit} >  submit </Text>
+          <Text> {info} </Text>
         </View>
         }
       </View>
