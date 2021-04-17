@@ -6,6 +6,7 @@ import VideoPlayer from 'expo-video-player'
 import { Fontisto } from '@expo/vector-icons';
 import { MaterialIcons } from '@expo/vector-icons';
 import axios from 'axios'
+// import { fb, db } from '../firebase'
 
 export default function home() {
   const [hasPermission, setHasPermission] = useState(null)
@@ -83,7 +84,7 @@ export default function home() {
   function cancel() {
     return (
       <View style={styles.vcancelbutton} >
-        <TouchableOpacity onPress={cancelvideo} style={{ textAlign: 'left', position:'absolute', padding:5 }}  >
+        <TouchableOpacity onPress={cancelvideo} style={{ textAlign: 'left', position: 'absolute', padding: 5 }}  >
           <Text style={styles.button} > cancel </Text>
         </TouchableOpacity>
       </View>
@@ -136,6 +137,19 @@ export default function home() {
   }
 
   function submit() {
+
+    // db.collection("users").add({
+    //   first: "Ada",
+    //   last: "Lovelace",
+    //   born: 1815
+    // })
+    //   .then((docRef) => {
+    //     console.log("Document written with ID: ", docRef.id);
+    //   })
+    //   .catch((error) => {
+    //     console.error("Error adding document: ", error);
+    //   });
+
     axios.post('https://particle-ae921-default-rtdb.firebaseio.com/video.json', {
       video: videosource,
     })
@@ -150,12 +164,12 @@ export default function home() {
 
       {videosource && video()}
 
-      <View style={{flexDirection:'row'}} >
-      {preview && cancel()}
-      {  preview && <View style={styles.vsubmitbutton}>
-        <Text style={styles.button} onPress={submit} >  submit </Text>
-      </View>
-      } 
+      <View style={{ flexDirection: 'row' }} >
+        {preview && cancel()}
+        {preview && <View style={styles.vsubmitbutton}>
+          <Text style={styles.button} onPress={submit} >  submit </Text>
+        </View>
+        }
       </View>
 
       <View style={{ flex: 0.1, flexDirection: 'row', flexWrap: 'wrap' }}  >
@@ -176,24 +190,24 @@ export default function home() {
 const styles = StyleSheet.create({
 
   vcancelbutton: {
-    flex:1,
+    flex: 1,
     //justifyContent:'center',
     backgroundColor: 'white',
-   
-    position:'relative',
-    flexDirection:'column'
+
+    position: 'relative',
+    flexDirection: 'column'
   },
 
-  vsubmitbutton:{
+  vsubmitbutton: {
     flex: 1,
     //justifyContent:'center',
     backgroundColor: 'white',
     padding: 5,
-    textAlign:'right',
-    alignItems:'flex-end',
-    justifyContent:'flex-end',
-    position:'relative',
-    flexDirection:'column',   
+    textAlign: 'right',
+    alignItems: 'flex-end',
+    justifyContent: 'flex-end',
+    position: 'relative',
+    flexDirection: 'column',
   },
 
   buttonbackground: {
@@ -221,12 +235,12 @@ const styles = StyleSheet.create({
     ...StyleSheet.absoluteFillObject,
   },
 
-  button:{
-    backgroundColor:'#DDDDDD',
-    alignItems:'center',
-    borderRadius:10,
-    padding:10,
-},
+  button: {
+    backgroundColor: '#DDDDDD',
+    alignItems: 'center',
+    borderRadius: 10,
+    padding: 10,
+  },
 
 
   indicator: {
