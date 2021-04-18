@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react'
-import { Text, View , ScrollView } from 'react-native'
+import { Text, View , ScrollView, Linking } from 'react-native'
 import {Card, Title,Button} from 'react-native-paper'
 import axios from 'axios'
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 export default function responses() {
 
@@ -36,7 +37,7 @@ export default function responses() {
                             <Title>Name:- {data.personName} </Title>
                          { data.projectLink &&   <Title>ProjectLink :- { data.projectLink} </Title>}
                             <Title>QuizAns:- {data.quizAns} </Title>
-                            <Title>VideoLink:- {data.video} </Title>
+                            <Title style={{color:'blue'}} onPress={ () => Linking.openURL(data.video) } > VideoLink<Icon name="external-link" size={20} color="blue" />  </Title>
                         </Card.Content>
 
                     </Card>
