@@ -44,13 +44,14 @@ export default function jobseeker({ navigation }) {
                             </View> */}
                             <Card style={{ flex: 1, margin: 10}} key={index} >
 
+                                <View  style={{margin:15}}>
                                 
-                                <Card.Title style={{ flex: 1, flexDirection: 'row' }} title={data.companyname} />
-
-                                <Card.Content>
-                                    <Title>{data.position} </Title>
-                                    <Paragraph style={{fontWeight:'bold'}} >{data.description}  </Paragraph>
-                                </Card.Content>
+                                <Text style={{ marginBottom:10 ,fontSize:20}} >Company:- {data.companyname}  </Text>
+                                <Text style={{  fontSize:20}}>Positions :- </Text>
+                                <Text style={{ marginBottom:10 , fontSize:20}} >{data.position}  </Text>
+                                <Text style={{  fontSize:20}}>Description :- </Text>
+                                <Paragraph style={{fontWeight:'bold',}} >{data.description}  </Paragraph>
+                                </View>
                                 <Card.Actions>
                                     <Button onPress={() => {
                                         { navigation.push('Jobdata', { companyname: data }) }

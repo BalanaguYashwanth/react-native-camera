@@ -12,7 +12,7 @@ export default function jobdata({ navigation }) {
     const [company, setCompany] = useState()
     const [name, setName] = useState('')
     const [projectlink, setProjectlink] = useState()
-    const [info, setInfo] = useState()
+    const [info, setInfo] = useState(null)
     //{ form1: { id: 1, key: "form1", opt1: "Programming language", opt2: "Non Programming language", opt3: "Science", opt4: "Social", question: "Where array will use" }, }
 
     useEffect(() => {
@@ -38,6 +38,9 @@ export default function jobdata({ navigation }) {
             }
             else {
                 setInfo('please fillup all datas')
+                setTimeout( function(){
+                    setInfo(null)
+                },3000 )
             }
         }
 
@@ -63,9 +66,9 @@ export default function jobdata({ navigation }) {
     }
 
     return (
-        <View style={{ margin: 10 }}>
+        <View >
             
-            <Text style={{ textAlign:'center', fontWeight: 'bold', color:'red'}} > {info} </Text>
+          { info &&  <Text style={{ textAlign:'center', backgroundColor:'yellow'}} > {info} </Text>}
 
             <Text style={{ textAlign: 'center', alignItems: 'center', fontWeight: '500', fontSize: 30, margin: 5 }}   > Exam Details </Text>
 
