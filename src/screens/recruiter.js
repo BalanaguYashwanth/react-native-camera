@@ -7,6 +7,7 @@ import { fb } from '../authentication/config'
 import * as Google from 'expo-google-app-auth';
 import { SocialIcon } from 'react-native-elements'
 import firebase from 'firebase'
+import * as AppAuth from 'expo-app-auth';
 
 export default function recruiter({ navigation }) {
     const [email, setEmail] = useState()
@@ -32,17 +33,21 @@ export default function recruiter({ navigation }) {
     async function login() {
         try {
             const result = await Google.logInAsync({
-                //behaviour:'web',
+                androidStandaloneAppClientId:'123772005102-q90j9t39qn3b3f3dgft5kt1hvgdrkdas.apps.googleusercontent.com',
                 androidClientId: '123772005102-qc59j7ubfutr5t3q2pfihs5sct9h36kj.apps.googleusercontent.com',
                 //iosClientId: YOUR_CLIENT_ID_HERE,
                 scopes: ['profile', 'email'],
+                behaviour:'web',
+                redirectUrl: `${AppAuth.OAuthRedirect}:/oauthredirect`
             });
 
             if (result.type === 'success') {
                 navigation.navigate('Recruiterhome')
                 return result.accessToken;
             } else {
-                return { cancelled: true };
+                return {
+                    cancelled: true 
+                    };
             }
         } catch (e) {
             return { error: true };

@@ -19,18 +19,18 @@ export default function Switch({navigation}) {
 
     return (
         <View style={styles.container}>
-            <Text style={{textAlign:'center',margin:5, fontWeight:'bold'}}>  Who you are  </Text>
+            {/* <Text style={{textAlign:'center',margin:5, fontWeight:'bold'}}>  Who you are  </Text> */}
             <TouchableOpacity style={styles.button} onPress={recruiterHandler}> 
-            <Text> Recruiter </Text> 
+            <Text> Hire Talent </Text> 
             </TouchableOpacity>
            
             <TouchableOpacity style={styles.button} onPress={jobseekerHandler}> 
-            <Text> Job Seeker</Text> 
+            <Text> Job Search</Text> 
             </TouchableOpacity>
 
-            <TouchableOpacity style={styles.button} onPress={responses}> 
+            {/* <TouchableOpacity style={styles.button} onPress={responses}> 
             <Text> Evaluator </Text> 
-            </TouchableOpacity>
+            </TouchableOpacity> */}
         </View>
     )
 }

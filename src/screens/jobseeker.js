@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from 'react'
-import { Text, TextInput, View, TouchableOpacity, Touchable, Alert } from 'react-native'
+import { Text, TextInput, View, TouchableOpacity, Touchable, Alert, ScrollView, Image } from 'react-native'
 import { styles } from '../styles/global'
 //import {Button} from 'react-native-paper'
 import axios from 'axios'
-import { Card, Button } from 'react-native-paper'
+import { Card, Button, Paragraph,Title } from 'react-native-paper'
 import Jobdata from '../screens/jobdata'
 
-export default function jobseeker({navigation}) {
+export default function jobseeker({ navigation }) {
     const [datas, setDatas] = useState([])
-    
+
     useEffect(() => {
         axios.get('https://particle-ae921-default-rtdb.firebaseio.com/media.json')
             .then(res => {
@@ -29,20 +29,42 @@ export default function jobseeker({navigation}) {
     }
 
     return (
-        <View >
-            {
-                datas && datas.map((data, index) => (
-                    <Card style={{ margin: 10, }} key={index} >
-                        <Card.Title title={data.companyname}  />
-                        <Card.Actions>
-                            <Button onPress={() => {
-                                {navigation.push('Jobdata',{ companyname:data} )}  
-                             } } > {'->'}</Button>
+        <View style={{ flex: 1, flexDirection: "column" }} >
+            <ScrollView>
+                {
+                    datas && datas.map((data, index) => (
+                        <View key={index}>
+                            {/* <View style={{ flex: 1, margin: 10,width:100 ,flexDirection: 'row' }}>
+                                <Image
+                                    style={styles.logo}
+                                    source={{
+                                        uri: 'https://reactnative.dev/img/tiny_logo.png',
+                                    }}
+                                />
+                            </View> */}
+                            <Card style={{ flex: 1, margin: 10}} key={index} >
+
                                 
-                        </Card.Actions>
-                    </Card>
-                ))
-            }
+                                <Card.Title style={{ flex: 1, flexDirection: 'row' }} title={data.companyname} />
+
+                                <Card.Content>
+                                    <Title>{data.position} </Title>
+                                    <Paragraph style={{fontWeight:'bold'}} >{data.description}  </Paragraph>
+                                </Card.Content>
+                                <Card.Actions>
+                                    <Button onPress={() => {
+                                        { navigation.push('Jobdata', { companyname: data }) }
+                                    }} > Apply </Button>
+
+                                    <Button onPress={() => (navigation.push('Responses'))} > Evaluate </Button>
+
+                                </Card.Actions>
+
+                            </Card>
+                        </View>
+                    ))
+                }
+            </ScrollView>
         </View>
     )
 }

@@ -53,7 +53,7 @@ export default function jobdata({ navigation }) {
                             <Text> <RadioButton value='B' color='black' onPress={() => setChecked('B')} status={checked === 'B' ? 'checked' : 'unchecked'} />  {value.opt2} </Text>
                             <Text> <RadioButton value='C' color='black' onPress={() => setChecked('C')} status={checked === 'C' ? 'checked' : 'unchecked'} />  {value.opt3} </Text>
                             <Text> <RadioButton value='D' color='black' onPress={() => setChecked('D')} status={checked === 'D' ? 'checked' : 'unchecked'} />  {value.opt4} </Text>
-                            <Button onPress={submit} style={{ margin: 5 }} mode="contained" >  submit </Button>
+                            <Button onPress={submit} style={{ margin: 5 }} mode="contained" >  Video </Button>
 
                         </View>
                     ))
@@ -69,9 +69,9 @@ export default function jobdata({ navigation }) {
 
             <Text style={{ textAlign: 'center', alignItems: 'center', fontWeight: '500', fontSize: 30, margin: 5 }}   > Exam Details </Text>
 
-            <TextInput label="enter your name" onChangeText={(val) => (setName(val))} style={{ margin: 4 }} />
+            <TextInput  style={{  margin: 5, backgroundColor:'#ddddd' }}  label="Your Name" onChangeText={(val) => (setName(val))} />
 
-            {  !!project && <TextInput style={{ margin: 4 }} onChangeText={(val) => (setProjectlink(val))} label={project} />}
+            {  !!project && <TextInput style={{ margin: 4 }}  style={{  margin: 5, backgroundColor:'#ddddd' }}  onChangeText={(val) => (setProjectlink(val))} label={project} />}
 
             {forms(form)}
         </View>
