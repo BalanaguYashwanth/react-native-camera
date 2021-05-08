@@ -17,6 +17,7 @@ export default function home({navigation}) {
   const [recordingstatus, setRecordingstatus] = useState(false);
   const [preview, setPreview] = useState(false);
   const [info,setInfo]=useState('')
+  const [uploading,setUploading] = useState(true) 
 
   const cameraRef = useRef();
 
@@ -113,7 +114,7 @@ export default function home({navigation}) {
 
   function flip() {
     return (
-      <View  >
+      <View>
         <TouchableOpacity
           onPress={flipfunction}
           style={styles.buttonbackground}
@@ -144,6 +145,7 @@ export default function home({navigation}) {
 
   async function submit() {
 
+    setUploading(false)
     setInfo(' processing.....')
 
     const blob = await new Promise((resolve, reject) => {
@@ -153,6 +155,7 @@ export default function home({navigation}) {
       };
       xhr.onerror = function (e) {
         console.log(e);
+        setInfo(' Network request failed')
         reject(new TypeError('Network request failed'));
       };
       xhr.responseType = 'blob';
@@ -176,10 +179,12 @@ export default function home({navigation}) {
       personName:navigation.getParam('personName'),
       quizAns:navigation.getParam('quizAns'),
       projectLink:navigation.getParam('projectLink'),
+      optionalInput:navigation.getParam('optionalInput'),
       video: link,
     })
       .then(res => {
         console.log(res)
+        setUploading(true)
         navigation.push('Switch')
       })
       .catch(err => console.log(err))
@@ -190,9 +195,13 @@ export default function home({navigation}) {
     <SafeAreaView style={styles.container} >
       { !preview && <Camera ref={cameraRef} style={styles.camera} type={type} />}
 
+      
       {videosource && video()}
 
-      <View style={{ flexDirection: 'row' }} >
+      { !!info && <Text style={{backgroundColor:'white', padding:5, textAlign:'center'}} > {info} </Text>}
+
+
+     { uploading &&  <View style={{ flexDirection: 'row' }} >
         {preview && cancel()}
         
         {preview && <View style={styles.vsubmitbutton}>
@@ -202,6 +211,7 @@ export default function home({navigation}) {
         </View>
         }
       </View>
+      }
 
       <View style={{ flex: 0.1, flexDirection: 'row', flexWrap: 'wrap' }}  >
         <View style={{ flexDirection: 'column', marginLeft: 25, padding: 5 }}>
@@ -261,8 +271,7 @@ const styles = StyleSheet.create({
 
   media: {
     flex: 1,
-    height: 400,
-    marginTop: 10,
+    marginTop:10,
     ...StyleSheet.absoluteFillObject,
   },
 

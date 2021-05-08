@@ -7,7 +7,7 @@ import axios from 'axios'
 
 export default function recuriterhome({navigation}) {
 
-    const [checked, setChecked] = useState(true);
+    const [checked, setChecked] = useState(false);
     const [projectChecked, setProjectChecked] = useState(true)
     const [numform, setNumform] = useState(['form1'])
     const [forms, setForms] = useState({ form1: { id: 1, question: 'Enter the question', opt1: 'enter the option1', opt2: 'enter the option2', opt3: 'enter the option3', opt4: 'enter the option4' } })
@@ -17,6 +17,9 @@ export default function recuriterhome({navigation}) {
     const [info, setInfo] = useState(null)
     const [description, setDescription] =  useState('') 
     const [position, setPosition] = useState('')
+    const [optional, setOptional] = useState('')
+    const [location, setLocation] = useState('')
+    const [salary, setSalary] = useState('')
 
     function add() {
         let addform = { ...forms }
@@ -42,13 +45,16 @@ export default function recuriterhome({navigation}) {
     }
 
     function submit() {
-        if(description!= '' && companyName!='' && position!='' )
+        if(description!= '' && companyName!='' && position!='' && location!='' && salary !='' )
         {
             axios.post('https://particle-ae921-default-rtdb.firebaseio.com/media.json',{
                 project:project,    
                 companyname:companyName,
                 description:description,
                 position:position,
+                optional:optional,
+                location:location,
+                salary:salary,
                 form:forms,
             }).then(res=>{
                 console.log(res)
@@ -148,16 +154,23 @@ export default function recuriterhome({navigation}) {
                         {/* <Text style={{ fontWeight: 'bold', textAlign: 'center', fontSize: 20, margin: 5 }}  >  Project Section </Text> */}
                     </View>
 
+                    <TextInput  style={{  margin: 10, backgroundColor:'#ddddd' }} label="Location Field" onChangeText={(val)=> setLocation(val)} />
+
+                    <TextInput  style={{  margin: 10, backgroundColor:'#ddddd' }} label="Salary Field" onChangeText={(val)=> setSalary(val)} />
+
                     {projectChecked && <TextInput  style={{  margin: 10, backgroundColor:'#ddddd' }} label="Project Details" onChangeText={(val)=> setProject(val)} />}
 
+                    <TextInput  style={{  margin: 10, backgroundColor:'#ddddd' }} label="Optional Field" onChangeText={(val)=> setOptional(val)} />
+                    
 
                     <View style={{ justifyContent: 'center', flexDirection: 'row', marginBottom: 5, marginTop: 10 }}>
 
-                        {/* <Checkbox
+                        <Checkbox
+                            
                             status={checked ? 'checked' : 'unchecked'}
                             onPress={() => setChecked(!checked)}
-                            color='#2196F3'
-                        /> */}
+                            color='#8A2BE2'
+                        />
 
                         <Text style={{ fontWeight: 'bold', textAlign: 'center', fontSize: 20, margin: 5 }} >  Quiz Section </Text>
                     </View>

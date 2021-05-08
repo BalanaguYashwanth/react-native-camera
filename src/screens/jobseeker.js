@@ -49,6 +49,8 @@ export default function jobseeker({ navigation }) {
                                 <Text style={{ marginBottom:10 ,fontSize:20}} >Company:- {data.companyname}  </Text>
                                 <Text style={{  fontSize:20}}>Positions :- </Text>
                                 <Text style={{ marginBottom:10 , fontSize:20}} >{data.position}  </Text>
+                                <Text style={{ marginBottom:10 , fontSize:20}} >{data.location}  </Text>
+                                <Text style={{ marginBottom:10 , fontSize:20}} >{data.salary}  </Text>
                                 <Text style={{  fontSize:20}}>Description :- </Text>
                                 <Paragraph style={{fontWeight:'bold',}} >{data.description}  </Paragraph>
                                 </View>

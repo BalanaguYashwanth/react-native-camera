@@ -13,6 +13,9 @@ export default function jobdata({ navigation }) {
     const [name, setName] = useState('')
     const [projectlink, setProjectlink] = useState()
     const [info, setInfo] = useState(null)
+    const [optional, setOptional] = useState(null)
+    const [optionalInput, setOptionalInput] = useState(null)
+    const [choices, setChoices] = useState(true)
     //{ form1: { id: 1, key: "form1", opt1: "Programming language", opt2: "Non Programming language", opt3: "Science", opt4: "Social", question: "Where array will use" }, }
 
     useEffect(() => {
@@ -22,6 +25,8 @@ export default function jobdata({ navigation }) {
         setCompany(data.companyname)
         setProject(data.project)
         setDatas(data)
+        setOptional(data.optional)
+        
     }, [])
 
 
@@ -33,7 +38,7 @@ export default function jobdata({ navigation }) {
 
         function submit() {
             if (name != '') {
-                navigation.push('camera', { company: company, personName: name, quizAns: checked, projectLink: projectlink })
+                navigation.push('camera', { company: company, personName: name, quizAns: checked, projectLink: projectlink,optionalInput:optionalInput })
                 console.log(checked)
             }
             else {
@@ -46,21 +51,22 @@ export default function jobdata({ navigation }) {
 
         return (
             <View>
-              
                 {
-                    form && Object.entries(form).map(([key, value]) => (
+                    choices &&  form && Object.entries(form).map(([key, value]) => (
                         <View key={value.id} style={{ margin: 10, }} >
-
-                            <Text> {value.id}) {value.question}  </Text>
+                            {/* <Text> {value.id}  { value.question  } </Text> */}
+                            <Text> { value.question == 'Enter the question' ? setChoices(false) : value.question  }    </Text>
                             <Text> <RadioButton value='A' color='black' onPress={() => setChecked('A')} status={checked === 'A' ? 'checked' : 'unchecked'} /> <Text> {value.opt1} </Text>  </Text>
                             <Text> <RadioButton value='B' color='black' onPress={() => setChecked('B')} status={checked === 'B' ? 'checked' : 'unchecked'} />  {value.opt2} </Text>
                             <Text> <RadioButton value='C' color='black' onPress={() => setChecked('C')} status={checked === 'C' ? 'checked' : 'unchecked'} />  {value.opt3} </Text>
                             <Text> <RadioButton value='D' color='black' onPress={() => setChecked('D')} status={checked === 'D' ? 'checked' : 'unchecked'} />  {value.opt4} </Text>
-                            <Button onPress={submit} style={{ margin: 5 }} mode="contained" >  Video </Button>
+                           
 
                         </View>
                     ))
+                    
                 }
+                 <Button onPress={submit} style={{ margin: 5 }} mode="contained" >  Video </Button>
             </View>
         )
     }
@@ -75,6 +81,8 @@ export default function jobdata({ navigation }) {
             <TextInput  style={{  margin: 5, backgroundColor:'#ddddd' }}  label="Your Name" onChangeText={(val) => (setName(val))} />
 
             {  !!project && <TextInput style={{ margin: 4 }}  style={{  margin: 5, backgroundColor:'#ddddd' }}  onChangeText={(val) => (setProjectlink(val))} label={project} />}
+
+            { !!optional && <TextInput style={{ margin: 4 }} multiline={true} style={{  margin: 5, backgroundColor:'#ddddd' }} onChangeText={(val) => setOptionalInput(val) } label={optional}  />}
 
             {forms(form)}
         </View>
