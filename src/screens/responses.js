@@ -36,12 +36,12 @@ export default function responses() {
                         <Card.Content>
                             <Title>Name:- {data.personName} </Title>
                          { data.projectLink &&   <Title>ProjectLink :- { data.projectLink} </Title>}
-                            <Title>QuizAns:- {data.quizAns} </Title>
-                            <Title style={{color:'blue'}} onPress={ () => Linking.openURL(data.video) } > VideoLink<Icon name="external-link" size={20} color="blue" />  </Title>
+                            <Title>QuizAns:- {data.quizAns  ? data.quizAns :'NA' } </Title>
+                            <Title>OptionalData:-{data.optionalInput ? data.optionalInput : 'NA' } </Title>
+                            <Title style={{color:'blue'}} onPress={ () => Linking.openURL(data.video) } >VideoLink<Icon name="external-link" size={20} color="blue" />  </Title>
                         </Card.Content>
 
                     </Card>
-
                 )  )
             }
             </ScrollView>

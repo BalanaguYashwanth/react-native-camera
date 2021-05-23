@@ -13,22 +13,22 @@ export default function recruiter({ navigation }) {
     const [email, setEmail] = useState()
     const [password, setPassword] = useState()
 
-    function checkIfLogin(){
-        firebase.auth().onAuthStateChanged((user) => {
-            if(user){
-                navigation.navigate('Recruiterhome')
-            }
-            else{
-                navigation.navigate('Recruiter')
-            }
-        })
-    }
+//     function checkIfLogin(){
+//         firebase.auth().onAuthStateChanged((user) => {
+//             if(user){
+//                 navigation.navigate('Recruitersection')
+//             }
+//             else{
+//                 navigation.navigate('Recruiter')
+//             }
+//         })
+//     }
 
-// get the user and do auto login later
+// // get the user and do auto login later
 
-    useEffect( () => {
-        checkIfLogin()
-    },[])
+//     useEffect( () => {
+//         checkIfLogin()
+//     },[])
 
     async function login() {
         try {
@@ -42,9 +42,10 @@ export default function recruiter({ navigation }) {
             });
 
             if (result.type === 'success') {
-                navigation.navigate('Recruiterhome')
+                navigation.navigate('Recruitersection')
                 return result.accessToken;
             } else {
+                navigation.navigate('Recruiter')
                 return {
                     cancelled: true 
                     };

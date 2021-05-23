@@ -5,7 +5,7 @@ import { TextInput, RadioButton, Button } from 'react-native-paper'
 
 export default function jobdata({ navigation }) {
 
-    const [checked, setChecked] = useState()
+    const [checked, setChecked] = useState('')
     const [datas, setDatas] = useState()
     const [project, setProject] = useState('')
     const [form, setForm] = useState()
@@ -66,7 +66,7 @@ export default function jobdata({ navigation }) {
                     ))
                     
                 }
-                 <Button onPress={submit} style={{ margin: 5 }} mode="contained" >  Video </Button>
+                 <Button onPress={submit} style={{ margin: 5 }} mode="contained" >  Create Short Video </Button>
             </View>
         )
     }
@@ -74,17 +74,21 @@ export default function jobdata({ navigation }) {
     return (
         <View >
             
-          { info &&  <Text style={{ textAlign:'center', backgroundColor:'yellow'}} > {info} </Text>}
+          { info &&  <Text style={{ textAlign:'center', backgroundColor:'grey'}} > {info} </Text>}
 
-            <Text style={{ textAlign: 'center', alignItems: 'center', fontWeight: '500', fontSize: 30, margin: 5 }}   > Exam Details </Text>
+            <View style={{margin:5}}>
+            <Text style={{ textAlign: 'center', alignItems: 'center', fontWeight: '500', fontSize: 30, margin: 5 }} > Response </Text>
 
-            <TextInput  style={{  margin: 5, backgroundColor:'#ddddd' }}  label="Your Name" onChangeText={(val) => (setName(val))} />
+            <TextInput  style={{  margin: 5, backgroundColor:'#ddddd' }}  label="Name" onChangeText={(val) => (setName(val))} />
 
-            {  !!project && <TextInput style={{ margin: 4 }}  style={{  margin: 5, backgroundColor:'#ddddd' }}  onChangeText={(val) => (setProjectlink(val))} label={project} />}
+            <Text style={{  marginLeft: 5, marginTop:15 }} > {project} </Text>
+            {  !!project && <TextInput  multiline={true}  style={{  backgroundColor:'#ddddd' }}  onChangeText={(val) => (setProjectlink(val))}  />}
 
-            { !!optional && <TextInput style={{ margin: 4 }} multiline={true} style={{  margin: 5, backgroundColor:'#ddddd' }} onChangeText={(val) => setOptionalInput(val) } label={optional}  />}
+            <Text style={{  marginLeft: 5,  marginTop:15 }} > {optional} </Text>
+            { !!optional && <TextInput  multiline={true} style={{   backgroundColor:'#ddddd' }} onChangeText={(val) => setOptionalInput(val) }  />}
 
             {forms(form)}
+            </View>
         </View>
     )
 }

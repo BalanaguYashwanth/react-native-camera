@@ -17,9 +17,9 @@ export default function recuriterhome({ navigation }) {
     const [info, setInfo] = useState(null)
     const [description, setDescription] = useState('')
     const [position, setPosition] = useState('')
-    const [optional, setOptional] = useState('')
     const [location, setLocation] = useState('')
     const [salary, setSalary] = useState('')
+    const [optional, setOptional] = useState('')
 
     function add() {
         let addform = { ...forms }
@@ -100,7 +100,6 @@ export default function recuriterhome({ navigation }) {
             arr.push(datas[x])
             console.log(arr)
         }
-
 
         return (
             <View style={{ flex: 1, flexDirection: 'column' }} >
